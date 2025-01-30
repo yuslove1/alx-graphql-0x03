@@ -3,6 +3,8 @@ import { GET_EPISODES } from "@/graphql/queries";
 import EpisodeCard from "@/components/common/EpisodeCard";
 import { useEffect, useState } from "react";
 import { EpisodeProps } from "@/interfaces";
+import ErrorProneComponent from "@/components/ErrorProneComponent";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 // Home component - displays a list of Rick and Morty episodes
 const Home: React.FC = () => {
@@ -25,7 +27,8 @@ const Home: React.FC = () => {
   if (loading) return <h1 className="text-center mt-10">Loading...</h1>;
 
   // Display error message if there's an error during fetching
-  if (error) return <h1 className="text-center mt-10">Error: {error.message}</h1>; // Display error message
+  if (error)
+    return <h1 className="text-center mt-10">Error: {error.message}</h1>; // Display error message
 
   // Extract results and info from the fetched data
   const results = data?.episodes.results;
@@ -35,12 +38,22 @@ const Home: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-[#A3D5E0] to-[#F4F4F4] text-gray-800">
       {/* Header section */}
       <header className="bg-[#4CA1AF] text-white py-6 text-center shadow-md">
-        <h1 className="text-4xl font-bold tracking-wide">Rick and Morty Episodes</h1>
-        <p className="mt-2 text-lg italic">Explore the multiverse of adventures!</p>
+        <h1 className="text-4xl font-bold tracking-wide">
+          Rick and Morty Episodes
+        </h1>
+        <p className="mt-2 text-lg italic">
+          Explore the multiverse of adventures!
+        </p>
       </header>
 
       {/* Main content section */}
       <main className="flex-grow p-6">
+        {/* <ErrorBoundary>
+        <ErrorProneComponent />
+        </ErrorBoundary> */}
+
+        <ErrorProneComponent />
+
         {/* Episode grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {results &&
@@ -68,7 +81,9 @@ const Home: React.FC = () => {
 
           {/* Next button */}
           <button
-            onClick={() => setPage((prev) => (prev < info.pages ? prev + 1 : prev))}
+            onClick={() =>
+              setPage((prev) => (prev < info.pages ? prev + 1 : prev))
+            }
             className="bg-[#45B69C] text-white font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-[#3D9B80] transition duration-200 transform hover:scale-105"
             disabled={page === info.pages} // Disable if on the last page
           >

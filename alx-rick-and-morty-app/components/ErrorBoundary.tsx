@@ -1,5 +1,6 @@
 import { ErrorInfo, ReactNode } from "react";
 import React from "react";
+import * as Sentry from '@sentry/nextjs'
 
 // Interface defining the component's state
 interface State {
@@ -26,8 +27,9 @@ class ErrorBoudary extends React.Component<ErrorBoundaryProps, State> {
   }
 
   // Lifecycle method called after an error has been caught
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     // Log error details to the console
+    // Sentry.captureException(error, { extra: ErrorInfo });
     console.error("Caught an error:", { error, errorInfo });
   }
 
