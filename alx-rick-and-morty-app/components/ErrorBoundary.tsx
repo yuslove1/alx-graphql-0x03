@@ -28,9 +28,9 @@ class ErrorBoudary extends React.Component<ErrorBoundaryProps, State> {
 
   // Lifecycle method called after an error has been caught
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log error details to the console
-    // Sentry.captureException(error, { extra: ErrorInfo });
-    console.error("Caught an error:", { error, errorInfo });
+    // passed the error to sentry
+    Sentry.captureException(error, { extra: errorInfo });  
+    // console.error("Caught an error:", { error, errorInfo });  
   }
 
   render() {
